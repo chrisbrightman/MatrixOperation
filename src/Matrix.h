@@ -12,7 +12,7 @@ class Matrix {
 public:
     Matrix(int rowSize, int colSize);
     ~Matrix();
-    Matrix * operator + (const Matrix&);
+    Matrix *operator + (const Matrix&);
     Matrix * operator - (const Matrix&);
     Matrix * operator * (const Matrix&);
     Matrix invert(const Matrix&);
