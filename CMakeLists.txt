@@ -3,9 +3,14 @@ project(MatrixOperations)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(MatrixOperations src/Matrix.h src/Matrix.cpp src/main.cpp)
+add_library(matrices STATIC src/Matrix.cpp src/Matrix.h)
 
-cmake_minimum_required(VERSION 3.0)
+add_executable(MatrixOperations src/main.cpp)
+target_link_libraries(MatrixOperations matrices)
+
+##################
+## adding gtest ##
+##################
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -40,7 +45,5 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(unit_tests test/MatrixTest.cpp)
-target_link_libraries(unit_tests gtest)
-add_test(NAME example_test COMMAND unit_tests)
-
+add_executable(unit_tests test/MatrixTest.cpp test/TestMain.cpp)
+target_link_libraries(unit_tests gtest matrices)
