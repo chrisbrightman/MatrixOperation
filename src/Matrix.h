@@ -11,6 +11,7 @@ class Matrix {
     int colSize;
 public:
     Matrix(int rowSize, int colSize);
+    Matrix(const Matrix& toCopy);
     ~Matrix();
     Matrix *operator + (const Matrix&);
     Matrix * operator - (const Matrix&);
