@@ -23,3 +23,13 @@
 9	1490	611867377	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	44eea8171cf0a608
 1491	1541	611867377	lib/gtestd.lib	465d7d99e9719b50
 1541	2276	611867378	unit_tests.exe	bdb3ff57e6b1c079
+3	350	611878753	CMakeFiles/matrices.dir/src/cpuMatrix.cpp.obj	97fddb11c87953d2
+5	752	611878753	CMakeFiles/unit_tests.dir/test/MatrixTest.cpp.obj	408313ce0a9ae220
+1	66	611878792	CMakeFiles/matrices.dir/src/matrix.cpp.obj	a4c57aced8775641
+66	99	611878792	matrices.lib	e50095cd5437b69a
+99	336	611878792	unit_tests.exe	bdb3ff57e6b1c079
+1	177	611878888	CMakeFiles/matrices.dir/src/cpuMatrix.cpp.obj	97fddb11c87953d2
+177	205	611878888	matrices.lib	e50095cd5437b69a
+3	280	611878888	CMakeFiles/MatrixOperations.dir/src/main.cpp.obj	b589b3e8f387921f
+205	348	611878888	unit_tests.exe	bdb3ff57e6b1c079
+280	862	611878889	MatrixOperations.exe	2be497d8719f0a44

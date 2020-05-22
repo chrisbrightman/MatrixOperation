@@ -50,6 +50,13 @@ build CMakeFiles\matrices.dir\src\matrix.cpp.obj: CXX_COMPILER__matrices_Debug .
   TARGET_COMPILE_PDB = CMakeFiles\matrices.dir\matrices.pdb
   TARGET_PDB = matrices.pdb
 
+build CMakeFiles\matrices.dir\src\cpuMatrix.cpp.obj: CXX_COMPILER__matrices_Debug ..\..\..\src\cpuMatrix.cpp || cmake_object_order_depends_target_matrices_Debug
+  FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1   -std:c++14
+  OBJECT_DIR = CMakeFiles\matrices.dir
+  OBJECT_FILE_DIR = CMakeFiles\matrices.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\matrices.dir\matrices.pdb
+  TARGET_PDB = matrices.pdb
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target matrices
@@ -58,7 +65,7 @@ build CMakeFiles\matrices.dir\src\matrix.cpp.obj: CXX_COMPILER__matrices_Debug .
 #############################################
 # Link the static library matrices.lib
 
-build matrices.lib: CXX_STATIC_LIBRARY_LINKER__matrices_Debug CMakeFiles\matrices.dir\src\matrix.cpp.obj
+build matrices.lib: CXX_STATIC_LIBRARY_LINKER__matrices_Debug CMakeFiles\matrices.dir\src\matrix.cpp.obj CMakeFiles\matrices.dir\src\cpuMatrix.cpp.obj
   LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = CMakeFiles\matrices.dir

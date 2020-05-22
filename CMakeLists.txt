@@ -3,7 +3,7 @@ project(MatrixOperations)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(matrices STATIC src/matrix.cpp src/matrix.h)
+add_library(matrices STATIC src/matrix.cpp src/matrix.h src/cpuMatrix.cpp "src/cpuMatrix.h")
 
 add_executable(MatrixOperations src/main.cpp)
 target_link_libraries(MatrixOperations matrices)
