@@ -38,7 +38,7 @@ cpuMatrix* cpuMatrix::operator+(const cpuMatrix& other)
     cpuMatrix* result = new cpuMatrix(rowSize, colSize);
     for (int i = 0; i < rowSize; i++) {
         for (int j = 0; j < colSize; j++) {
-            threads[i * j] = new std::thread(&add, i, j, content, other.content, result->content);
+            //threads[i * j] = new std::thread(add, i, j, content, other.content, result->content);
         }
     }
     for (int i = 0; i < rowSize; i++) {
