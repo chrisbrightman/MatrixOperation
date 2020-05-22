@@ -1,0 +1,25 @@
+# ninja log v5
+1	693	611800525	CMakeFiles/matrices.dir/src/matrix.cpp.obj	746900531569bf9b
+3	713	611800525	CMakeFiles/MatrixOperations.dir/src/main.cpp.obj	55643c6afc176353
+693	754	611800525	matrices.lib	4f571aec37462c45
+6	926	611800526	CMakeFiles/unit_tests.dir/test/TestMain.cpp.obj	d9d2e25462a17726
+5	994	611800526	CMakeFiles/unit_tests.dir/test/MatrixTest.cpp.obj	c7f91eecfd5ab772
+755	1097	611800526	MatrixOperations.exe	2be497d8719f0a44
+8	1866	611800526	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	6fc3ce217f3cdf29
+1866	1912	611800527	lib/gtestd.lib	465d7d99e9719b50
+1912	2187	611800527	unit_tests.exe	bdb3ff57e6b1c079
+0	330	611810310	CMakeFiles/matrices.dir/src/matrix.cpp.obj	746900531569bf9b
+330	350	611810310	matrices.lib	4f571aec37462c45
+3	773	611810311	CMakeFiles/unit_tests.dir/test/MatrixTest.cpp.obj	c7f91eecfd5ab772
+773	958	611810311	unit_tests.exe	bdb3ff57e6b1c079
+0	187	611810670	CMakeFiles/matrices.dir/src/matrix.cpp.obj	746900531569bf9b
+187	209	611810670	matrices.lib	4f571aec37462c45
+3	513	611810670	CMakeFiles/unit_tests.dir/test/MatrixTest.cpp.obj	c7f91eecfd5ab772
+513	626	611810670	unit_tests.exe	bdb3ff57e6b1c079
+1	370	611867376	CMakeFiles/matrices.dir/src/matrix.cpp.obj	a4c57aced8775641
+370	398	611867376	matrices.lib	4f571aec37462c45
+5	695	611867376	CMakeFiles/unit_tests.dir/test/TestMain.cpp.obj	b7cda3a189e13baf
+4	742	611867376	CMakeFiles/unit_tests.dir/test/MatrixTest.cpp.obj	408313ce0a9ae220
+9	1490	611867377	googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	44eea8171cf0a608
+1491	1541	611867377	lib/gtestd.lib	465d7d99e9719b50
+1541	2276	611867378	unit_tests.exe	bdb3ff57e6b1c079

@@ -3,6 +3,7 @@
 //
 
 #include <cstdlib>
+#include <cstring>
 #include "matrix.h"
 
 /////////////////////
@@ -22,16 +23,6 @@ matrix::~matrix() {
     delete [] content;
 }
 
-matrix::matrix(const matrix& that) {
-    this->rowSize = that.rowSize;
-    this->colSize = that.rowSize;
-    this->content = makeDoubleVector(rowSize, colSize);
-    for (int i = 0; i < rowSize; i++) {
-        for (int j = 0; j < colSize; j++) {
-            content[i][j] = that.content[i][j];
-        }
-    }
-}
 
 ///////////////////
 // public methods//
@@ -69,8 +60,14 @@ matrix *matrix::operator*(const matrix & other) {
     return newMatrix;
 }
 
-matrix matrix::invert(const matrix &) {
-    return matrix(0, 0);
+matrix *matrix::invert() {
+    matrix* newMatrix = new matrix(this->colSize, this->rowSize);
+    for (int i = 0; i < rowSize; i++) {
+        for (int j = 0; j < colSize; j++) {
+            newMatrix->setCell(j, i, content[i][j]);
+        }
+    }
+    return newMatrix;
 }
 
 int matrix::getItem(int rowIndex, int cellIndex) const {

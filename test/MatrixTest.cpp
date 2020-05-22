@@ -66,4 +66,20 @@ namespace {
         delete test1;
     }
 
+    TEST(SingleThreadMatrix, invert) {
+        matrix test(MATRIX_DIM, MATRIX_DIM);
+        for (int i = 0; i < MATRIX_DIM; i++) {
+            for (int j = 0; j < MATRIX_DIM; j++) {
+                test.setCell(i, j, i);
+            }
+        }
+        matrix *inverted = test.invert();
+        for (int i = 0; i < MATRIX_DIM; i++) {
+            for (int j = 0; j < MATRIX_DIM; j++) {
+                inverted->setCell(i, j, j);
+            }
+        }
+        delete inverted;
+    }
+
 }
