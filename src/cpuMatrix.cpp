@@ -31,14 +31,14 @@ cpuMatrix::~cpuMatrix()
 ///////////////////
 
 
-cpuMatrix* cpuMatrix::operator+(const cpuMatrix& other)
+std::shared_ptr<cpuMatrix> cpuMatrix::operator+(const cpuMatrix& other) const
 {
     std::thread** threads;
     *threads = new std::thread [rowSize * colSize];
-    cpuMatrix* result = new cpuMatrix(rowSize, colSize);
+    std::shared_ptr<cpuMatrix> result(new cpuMatrix(rowSize, colSize));
     for (int i = 0; i < rowSize; i++) {
         for (int j = 0; j < colSize; j++) {
-            //threads[i * j] = new std::thread(add, i, j, content, other.content, result->content);
+            threads[i * j] = new std::thread(add, i, j, content, other.content, result->content);
         }
     }
     for (int i = 0; i < rowSize; i++) {
@@ -50,17 +50,17 @@ cpuMatrix* cpuMatrix::operator+(const cpuMatrix& other)
 	return result;
 }
 
-cpuMatrix* cpuMatrix::operator-(const cpuMatrix& other)
+std::shared_ptr<cpuMatrix> cpuMatrix::operator-(const cpuMatrix& other)
 {
 	return nullptr;
 }
 
-cpuMatrix* cpuMatrix::operator*(const cpuMatrix& other)
+std::shared_ptr<cpuMatrix> cpuMatrix::operator*(const cpuMatrix& other)
 {
 	return nullptr;
 }
 
-cpuMatrix* cpuMatrix::invert()
+std::shared_ptr<cpuMatrix> cpuMatrix::invert()
 {
 	return nullptr;
 }

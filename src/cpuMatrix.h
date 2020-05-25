@@ -6,6 +6,8 @@
 #ifndef MATRIX_CPU_MATRIX
 #define MATRIX_CPU_MATRIX
 
+#include <memory>
+
 class cpuMatrix {
     /// <summary>
     /// content: content of matrix; orientation [row][col]
@@ -24,27 +26,27 @@ public:
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to sum matrix</returns>
-    cpuMatrix *operator + (const cpuMatrix&);
+    std::shared_ptr<cpuMatrix> operator + (const cpuMatrix&) const;
 
     /// <summary>
     /// the subtraction opertor 
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to resultant matrix</returns>
-    cpuMatrix * operator - (const cpuMatrix&);
+    std::shared_ptr<cpuMatrix> operator - (const cpuMatrix&);
 
     /// <summary>
     /// multiplying two matriceis
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to result</returns>
-    cpuMatrix * operator * (const cpuMatrix&);
+    std::shared_ptr<cpuMatrix> operator * (const cpuMatrix&);
 
     /// <summary>
     /// creates the transpose of the matrix this
     /// </summary>
     /// <returns> the transposed matrix </returns>
-    cpuMatrix *invert();
+    std::shared_ptr<cpuMatrix> invert();
 
     /// <summary>
     /// this will set a single cell's value
@@ -63,7 +65,7 @@ public:
     int getItem(int rowIndex, int cellIndex) const;
 
 private:
-    void add(int rowIndex, int colIndex, int **one, int **two, int  **result);
+    static void add(int rowIndex, int colIndex, int **one, int **two, int  **result);
 
     void scaleVector(int* buffer, int scaler, const int *vector, int norm);
     int **makeDoubleVector(int normOne, int normTwo) const;
