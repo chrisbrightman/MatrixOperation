@@ -45,5 +45,5 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(unit_tests test/MatrixTest.cpp test/TestMain.cpp)
+add_executable(unit_tests test/MatrixTest.cpp test/TestMain.cpp test/cpuMatrixtTest.cpp)
 target_link_libraries(unit_tests gtest matrices)

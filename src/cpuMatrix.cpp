@@ -38,12 +38,12 @@ std::shared_ptr<cpuMatrix> cpuMatrix::operator+(const cpuMatrix& other) const
     std::shared_ptr<cpuMatrix> result(new cpuMatrix(rowSize, colSize));
     for (int i = 0; i < rowSize; i++) {
         for (int j = 0; j < colSize; j++) {
-            threads[i * j] = new std::thread(add, i, j, content, other.content, result->content);
+            threads[i * rowSize + j] = std::thread(add, i, j, content, other.content, result->content);
         }
     }
     for (int i = 0; i < rowSize; i++) {
         for (int j = 0; j < colSize; j++) {
-            threads[i * j]->join();
+            threads[i * rowSize + j].join();
         }
     }
 
@@ -67,6 +67,7 @@ std::shared_ptr<cpuMatrix> cpuMatrix::invert()
 
 void cpuMatrix::setCell(int rowIndex, int cellIndex, int value)
 {
+    content[rowIndex][cellIndex] = value;
 }
 
 int cpuMatrix::getItem(int rowIndex, int cellIndex) const
