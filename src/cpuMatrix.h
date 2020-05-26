@@ -17,16 +17,17 @@ class cpuMatrix {
     int **content;
     int rowSize;
     int colSize;
+    uint maxThreads;
 public:
     cpuMatrix(int rowSize, int colSize);
-    ~cpuMatrix();
+    virtual ~cpuMatrix();
 
     /// <summary>
     /// impelmentation of a matrix add
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to sum matrix</returns>
-    std::shared_ptr<cpuMatrix> operator + (const cpuMatrix&) const;
+    std::shared_ptr<cpuMatrix> operator + (const cpuMatrix&);
 
     /// <summary>
     /// the subtraction opertor 
@@ -66,6 +67,9 @@ public:
 
 private:
     static void add(int rowIndex, int colIndex, int **one, int **two, int  **result);
+    static void subtract(int rowIndex, int colIndex, int **one, int **two, int **result);
+    static void toInvert(int rowIndex, int colIndex, int **original, int **result);
+    std::shared_ptr<cpuMatrix> runThreads(void (*operation)(int,int,int**, int**, int**), const cpuMatrix& other);
 
     void scaleVector(int* buffer, int scaler, const int *vector, int norm);
     int **makeDoubleVector(int normOne, int normTwo) const;

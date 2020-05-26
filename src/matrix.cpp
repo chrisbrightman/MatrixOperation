@@ -28,11 +28,11 @@ matrix::~matrix() {
 // public methods//
 ///////////////////
 
-matrix *matrix::operator+(const matrix& other) {
-    matrix *newMatrix = new matrix(rowSize, colSize);
+matrix matrix::operator+(const matrix& other) {
+    matrix newMatrix(rowSize, colSize);
     for (int i = 0; i < rowSize; i++) {
         for (int j = 0; j < colSize; j++) {
-            newMatrix->setCell(i, j, content[i][j] + other.getItem(i, j));
+            newMatrix.setCell(i, j, content[i][j] + other.getItem(i, j));
         }
     }
     return newMatrix;

@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "../src/matrix.h"
 
-#define MATRIX_DIM 10
+#define MATRIX_DIM 1000
 #define MATRIX_VAL 2
 
 namespace {
@@ -19,14 +19,14 @@ namespace {
                 test1->setCell(i,j,MATRIX_VAL);
             }
         }
-        matrix *output = *test1 + *test1;
+        matrix output = *test1 + *test1;
+        test1->invert();
 
         for (int i = 0; i < MATRIX_DIM; i++) {
             for (int j = 0; j < MATRIX_DIM; j++) {
-                EXPECT_EQ(output->getItem(i,j), MATRIX_VAL * 2);
+                EXPECT_EQ(output.getItem(i,j), MATRIX_VAL * 2);
             }
         }
-        delete output;
         delete test1;
     }
 

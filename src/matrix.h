@@ -27,14 +27,14 @@ public:
     /// <sumery>
     /// the deconrtuctor
     /// </summary>
-    ~matrix();
+    virtual ~matrix();
 
     /// <summary>
     /// impelmentation of a matrix add
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to sum matrix</returns>
-    matrix *operator + (const matrix&);
+    matrix operator + (const matrix&);
 
     /// <summary>
     /// the subtraction opertor 
