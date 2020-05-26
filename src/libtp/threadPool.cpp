@@ -7,7 +7,7 @@
 namespace tp {
 
     template<class T>
-    threadPool<T>::threadPool(uint maxThreads) {
+    threadPool<T>::threadPool(unsigned int maxThreads) {
         work = workQueue<T>();
         isDone = false;
         threads = std::stack<std::thread>();

@@ -10,12 +10,11 @@ file(GLOB libtp_test "test/libtp_test/*.cpp")
 
 add_executable(MatrixOperations "src/main.cpp")
 
-add_library(matrix SHARED ${libmatrix_src})
+add_library(libmx SHARED ${libmatrix_src})
 
-add_library(tp SHARED ${libtp_src})
-add_library(tp_static ${libtp_src})
+add_library(libtp SHARED ${libtp_src})
 
-target_link_libraries(MatrixOperations matrix tp)
+target_link_libraries(MatrixOperations libmx libtp)
 
 ##################
 ## adding gtest ##
@@ -55,6 +54,6 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(matrix_tests ${libmatrix_test})
-target_link_libraries(matrix_tests gtest matrix tp_static)
-add_executable(tp_test ${libtp_test} test/libtp_test/WorkQueueTest.cpp)
-target_link_libraries(tp_test gtest tp_static)
+target_link_libraries(matrix_tests gtest libmx libtp)
+add_executable(tp_test ${libtp_test})
+target_link_libraries(tp_test gtest libtp)

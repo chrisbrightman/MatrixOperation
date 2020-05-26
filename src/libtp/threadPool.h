@@ -20,7 +20,7 @@ namespace tp {
         bool isDone;
 
     public:
-        threadPool(uint maxThreads);
+        threadPool(unsigned int maxThreads);
 
         void addWork(std::function<void> work);
 
