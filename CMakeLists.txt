@@ -3,10 +3,18 @@ project(MatrixOperations)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(matrices STATIC src/matrix.cpp src/matrix.h src/cpuMatrix.cpp "src/cpuMatrix.h" src/threadPool.cpp src/threadPool.h src/workQueue.cpp src/workQueue.h)
+file(GLOB libmatrix_src "src/libmatrix/*.cpp" "src/libmatrix/*.h")
+file(GLOB libtp_src "src/libtp/*.cpp" "src/libtp/libtp/*.h")
+file(GLOB libmatrix_test "test/libmatrix_test/*.cpp")
+file(GLOB libtp_test "test/libtp_test/*.cpp")
 
-add_executable(MatrixOperations src/main.cpp)
-target_link_libraries(MatrixOperations matrices)
+add_executable(MatrixOperations "src/main.cpp")
+
+add_library(matrix SHARED ${libmatrix_src})
+
+add_library(tp SHARED ${libtp_src})
+
+target_link_libraries(MatrixOperations matrix tp)
 
 ##################
 ## adding gtest ##
@@ -45,5 +53,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(unit_tests test/MatrixTest.cpp test/TestMain.cpp test/cpuMatrixtTest.cpp)
-target_link_libraries(unit_tests gtest matrices)
+add_executable(matrix_tests ${libmatrix_test})
+target_link_libraries(matrix_tests gtest matrix tp)
+add_executable(tp_test ${libtp_test} test/libtp_test/WorkQueueTest.cpp)
+target_link_libraries(tp_test gtest tp)

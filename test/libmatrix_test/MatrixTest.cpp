@@ -2,7 +2,7 @@
 // Created by chris on 5/12/2020.
 
 #include "gtest/gtest.h"
-#include "../src/matrix.h"
+#include "../../src/libmatrix/matrix.h"
 
 #define MATRIX_DIM 1000
 #define MATRIX_VAL 2
