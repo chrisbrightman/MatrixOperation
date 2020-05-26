@@ -13,6 +13,7 @@ add_executable(MatrixOperations "src/main.cpp")
 add_library(matrix SHARED ${libmatrix_src})
 
 add_library(tp SHARED ${libtp_src})
+add_library(tp_static ${libtp_src})
 
 target_link_libraries(MatrixOperations matrix tp)
 
@@ -54,6 +55,6 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(matrix_tests ${libmatrix_test})
-target_link_libraries(matrix_tests gtest matrix tp)
+target_link_libraries(matrix_tests gtest matrix tp_static)
 add_executable(tp_test ${libtp_test} test/libtp_test/WorkQueueTest.cpp)
-target_link_libraries(tp_test gtest tp)
+target_link_libraries(tp_test gtest tp_static)

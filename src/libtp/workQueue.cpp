@@ -10,7 +10,8 @@ namespace tp {
     std::mutex lock;
 
     template<class T>
-    workQueue<T>::workQueue() {
+    workQueue<T>::workQueue(void) {
+        size = 0;
         toDo = std::queue<task_s<T>>();
     }
 
@@ -30,8 +31,9 @@ namespace tp {
     template<class... Args>
     void workQueue<T>::addWork(T (*function)(Args...), Args... args) {
         std::function<T> f{std::bind(function, args...)};
+        task_s<T> task = {f};
         lock.lock();
-        toDo.push(f);
+        toDo.push(task);
         lock.unlock();
     }
 
@@ -44,6 +46,7 @@ namespace tp {
     bool workQueue<T>::isWorkDone() {
         return size == 0;
     }
+
 
 }
 

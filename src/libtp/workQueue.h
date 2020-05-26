@@ -8,6 +8,7 @@
 #include <queue>
 #include <functional>
 #include <mutex>
+#include <memory>
 
 namespace tp{
 
@@ -21,7 +22,7 @@ namespace tp{
     class workQueue {
 
         int size;
-        std::queue<task_s<T>> toDo;
+        std::queue<std::unique_ptr<task_s<T>>> toDo;
 
     public:
 
@@ -39,7 +40,9 @@ namespace tp{
 
         task_s<T> dequeueWork();
 
-        };
+
+    };
+
 }
 
 #endif //MATRIXOPERATIONS_WORKQUEUE_H
