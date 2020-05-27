@@ -16,14 +16,14 @@ namespace tp {
     template <class T>
     class threadPool {
         std::stack<std::thread> threads;
-        workQueue<T> work;
+        workQueue<T> workQ;
         bool isDone;
 
     public:
 
 
         threadPool(unsigned int maxThreads) {
-            work = workQueue<T>();
+            workQ = workQueue<T>();
             isDone = false;
             threads = std::stack<std::thread>();
             for (int i = 0; i < maxThreads; i++) {
@@ -31,18 +31,23 @@ namespace tp {
             }
         }
 
-        void addWork(std::function<void> work);
+        template<class... Args>
+        void addWork(std::function<T(Args...)> work) {
+
+        }
 
     private:
 
+        template<class... Args>
         void operate() {
             while (!isDone) {
-                std::function<T> toDo = work.dequeueWork();
+                std::function<T(Args...)> toDo = workQ.dequeueWork();
                 toDo();
             }
         }
 
     };
+
 
 }
 

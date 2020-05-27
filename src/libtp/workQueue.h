@@ -16,45 +16,48 @@ namespace tp{
 
     template<class T, class... Args>
     struct task_s {
-        std::function<T(Args...)> *function;
+        std::function<T(Args...)> function;
         T *returnValue;
     };
 
-    template<class T>
+    template<class T, class... Args>
     class workQueue {
 
-        template<class... Args>
-        std::queue<task_s<T(Args...)>> toDo;
+        std::queue<task_s<T,Args...>*> toDo;
         int size;
 
     public:
 
 
-        workQueue() {
+        workQueue(T (*function)(Args...)) {
             size = 0;
+            toDo = std::queue<task_s<T, Args...>*>();
         }
 
-        virtual ~workQueue();
-
-        template<class... Args>
         void addWork(T (*function)(Args...), Args... args) {
-            std::function<T(Args...)> work = std::bind(function, args...);
-            task_s<T,Args...> task = {new std::function<T(Args...)>(function) };
+            task_s<T, Args...> *task = new task_s<T, Args...>;
+            task->function = std::bind(function, args...);
             lock.lock();
             toDo.push(task);
             lock.unlock();
+            size++;
         }
 
-        task_s<T> dequeueWork() {
+        task_s<T, Args...> *dequeueWork() {
             lock.lock();
-            task_s<T> someWork = toDo.front();
+            task_s<T, Args...> *someWork = toDo.front();
             lock.unlock();
+            size--;
             return someWork;
         }
 
-        int workLeftToDo();
+        int workLeftToDo() {
+            return size;
+        }
 
-        bool isWorkDone();
+        bool isWorkDone() {
+            return size == 0;
+        }
 
     };
 

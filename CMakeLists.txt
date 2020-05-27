@@ -3,7 +3,7 @@ project(MatrixOperations)
 
 set(CMAKE_CXX_STANDARD 14)
 
-IF(CXX="g++")
+IF(CXX=g++)
     add_compile_options("-ggdb")
 
 endif()
