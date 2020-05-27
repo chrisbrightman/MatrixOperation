@@ -6,23 +6,7 @@
 
 namespace tp {
 
-    template<class T>
-    threadPool<T>::threadPool(unsigned int maxThreads) {
-        work = workQueue<T>();
-        isDone = false;
-        threads = std::stack<std::thread>();
-        for (int i = 0; i < maxThreads; i++) {
-            threads.push(std::thread(&threadPool::operate, this));
-        }
-    }
 
-    template<class T>
-    void threadPool<T>::operate() {
-        while (!isDone) {
-            std::function<T> toDo = work.dequeueWork();
-            toDo();
-        }
-    }
 
 }
 

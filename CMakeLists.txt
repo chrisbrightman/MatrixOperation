@@ -3,6 +3,11 @@ project(MatrixOperations)
 
 set(CMAKE_CXX_STANDARD 14)
 
+IF(CXX="g++")
+    add_compile_options("-ggdb")
+
+endif()
+
 file(GLOB libmatrix_src "src/libmatrix/*.cpp" "src/libmatrix/*.h")
 file(GLOB libtp_src "src/libtp/*.cpp" "src/libtp/libtp/*.h")
 file(GLOB libmatrix_test "test/libmatrix_test/*.cpp")
@@ -52,7 +57,6 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-# Now simply link against gtest or gtest_main as needed. Eg
 add_executable(matrix_tests ${libmatrix_test})
 target_link_libraries(matrix_tests gtest libmx libtp)
 add_executable(tp_test ${libtp_test})

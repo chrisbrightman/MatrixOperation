@@ -12,34 +12,49 @@
 
 namespace tp{
 
-    template<class T>
+    static std::mutex lock;
+
+    template<class T, class... Args>
     struct task_s {
-        std::function<T> function;
-        T returnValue;
+        std::function<T(Args...)> *function;
+        T *returnValue;
     };
 
     template<class T>
     class workQueue {
 
+        template<class... Args>
+        std::queue<task_s<T(Args...)>> toDo;
         int size;
-        std::queue<std::unique_ptr<task_s<T>>> toDo;
 
     public:
 
 
-        workQueue();
+        workQueue() {
+            size = 0;
+        }
 
         virtual ~workQueue();
 
         template<class... Args>
-                void addWork(T (*function)(Args...), Args... args);
+        void addWork(T (*function)(Args...), Args... args) {
+            std::function<T(Args...)> work = std::bind(function, args...);
+            task_s<T,Args...> task = {new std::function<T(Args...)>(function) };
+            lock.lock();
+            toDo.push(task);
+            lock.unlock();
+        }
+
+        task_s<T> dequeueWork() {
+            lock.lock();
+            task_s<T> someWork = toDo.front();
+            lock.unlock();
+            return someWork;
+        }
 
         int workLeftToDo();
 
         bool isWorkDone();
-
-        task_s<T> dequeueWork();
-
 
     };
 
