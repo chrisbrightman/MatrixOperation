@@ -59,5 +59,5 @@ endif()
 
 add_executable(matrix_tests ${libmatrix_test})
 target_link_libraries(matrix_tests gtest libmx libtp)
-add_executable(tp_test ${libtp_test})
+add_executable(tp_test ${libtp_test} test/libtp_test/threadPoolTest.cpp)
 target_link_libraries(tp_test gtest libtp)

@@ -14,38 +14,38 @@ namespace tp{
 
     static std::mutex lock;
 
-    template<class T, class... Args>
+    template<class T>
     struct task_s {
-        std::function<T(Args...)> function;
+        std::function<T()> function;
         T *returnValue;
     };
 
-    template<class T, class... Args>
+    template<class T>
     class workQueue {
 
-        std::queue<task_s<T,Args...>*> toDo;
+        std::queue<task_s<T>*> toDo;
         int size;
 
     public:
 
 
-        workQueue(T (*function)(Args...)) {
+        workQueue() {
             size = 0;
-            toDo = std::queue<task_s<T, Args...>*>();
+            toDo = std::queue<task_s<T>*>();
         }
 
-        void addWork(T (*function)(Args...), Args... args) {
-            task_s<T, Args...> *task = new task_s<T, Args...>;
-            task->function = std::bind(function, args...);
+        void addWork(std::function<T()> function) {
+            task_s<T> *task = new task_s<T>;
+            task->function = function;
             lock.lock();
             toDo.push(task);
             lock.unlock();
             size++;
         }
 
-        task_s<T, Args...> *dequeueWork() {
+        task_s<T> *dequeueWork() {
             lock.lock();
-            task_s<T, Args...> *someWork = toDo.front();
+            task_s<T> *someWork = toDo.front();
             lock.unlock();
             size--;
             return someWork;

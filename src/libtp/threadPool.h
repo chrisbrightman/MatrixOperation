@@ -32,8 +32,8 @@ namespace tp {
         }
 
         template<class... Args>
-        void addWork(std::function<T(Args...)> work) {
-
+        void addWork(std::function<T(Args...)> work, Args... args) {
+            workQ.addWork( [work, args...] (Args...) { work(args...); });
         }
 
     private:
