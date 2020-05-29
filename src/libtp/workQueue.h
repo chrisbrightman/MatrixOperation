@@ -34,28 +34,33 @@ namespace tp{
             toDo = std::queue<task_s<T>*>();
         }
 
-        void addWork(std::function<T()> function) {
+        virtual void addWork(std::function<T()> function, T* result) {
             task_s<T> *task = new task_s<T>;
             task->function = function;
+            task->returnValue = result;
             lock.lock();
             toDo.push(task);
-            lock.unlock();
             size++;
+            lock.unlock();
         }
 
-        task_s<T> *dequeueWork() {
+        virtual task_s<T> *dequeueWork() {
             lock.lock();
+            if (isWorkDone()) {
+                return nullptr;
+            }
             task_s<T> *someWork = toDo.front();
-            lock.unlock();
+            toDo.pop();
             size--;
+            lock.unlock();
             return someWork;
         }
 
-        int workLeftToDo() {
+        virtual int workLeftToDo() {
             return size;
         }
 
-        bool isWorkDone() {
+        virtual bool isWorkDone() {
             return size == 0;
         }
 

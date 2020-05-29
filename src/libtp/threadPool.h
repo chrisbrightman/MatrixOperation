@@ -9,40 +9,89 @@
 #include <queue>
 #include <stack>
 #include <functional>
+#include <atomic>
 #include "workQueue.h"
+
+#include <iostream>
 
 namespace tp {
 
     template <class T>
     class threadPool {
-        std::stack<std::thread> threads;
+        std::stack<std::thread*> threads;
         workQueue<T> workQ;
         bool isDone;
 
     public:
 
 
-        threadPool(unsigned int maxThreads) {
-            workQ = workQueue<T>();
+        threadPool(unsigned int maxThreads = std::thread::hardware_concurrency()) {
+            this->workQ = workQueue<T>();
             isDone = false;
-            threads = std::stack<std::thread>();
+            threads = std::stack<std::thread*>();
             for (int i = 0; i < maxThreads; i++) {
-                threads.push(std::thread(&threadPool::operate, this));
+                threads.push( new std::thread(&threadPool::operate, this));
             }
         }
 
-        template<class... Args>
-        void addWork(std::function<T(Args...)> work, Args... args) {
-            workQ.addWork( [work, args...] (Args...) { work(args...); });
+        ~threadPool() {
+            isDone = true;
+            for (int i = 0; i < threads.size(); i++) {
+                std::thread *thread = threads.top();
+                if (thread->joinable()) {
+                    thread->join();
+                }
+                threads.pop();
+                delete thread;
+            }
+        }
+
+        void addWork(std::function<T()> work, T *result) {
+            workQ.addWork( work , result);
+        }
+
+        void waitUntilDone() {
+            isDone = true;
+            for (int i = 0; i < threads.size(); i++) {
+                try {
+                    std::thread *thread = threads.top();
+                    if (thread->joinable()) {
+                        thread->join();
+                    }
+                }
+                catch (const std::exception& ex) {
+                    std::cout << ex.what();
+                }
+            }
         }
 
     private:
 
-        template<class... Args>
         void operate() {
-            while (!isDone) {
-                std::function<T(Args...)> toDo = workQ.dequeueWork();
-                toDo();
+            try {
+                while (!isDone || !workQ.isWorkDone()) {
+                    if (workQ.isWorkDone()) {
+                        std::this_thread::sleep_for(std::chrono::seconds(1));
+                    }
+                    lock.lock();
+                    if (workQ.isWorkDone()) {
+                        continue;
+                    }
+                    task_s<T> *toDo = workQ.dequeueWork();
+                    lock.unlock();
+                    if (toDo == nullptr) {
+                        if (isDone) {
+                            break;
+                        }
+                        continue;
+                    }
+                    T value = toDo->function();
+                    toDo->returnValue = &value;
+                }
+            } catch (const std::exception& ex) {
+                std::cout << ex.what();
+                std::cout << "I'm here";
+
             }
         }
 

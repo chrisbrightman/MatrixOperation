@@ -4,8 +4,7 @@ project(MatrixOperations)
 set(CMAKE_CXX_STANDARD 14)
 
 IF(CXX=g++)
-    add_compile_options("-ggdb")
-
+    add_compile_options(-ggdb -Wall -Wextra -pedantic)
 endif()
 
 file(GLOB libmatrix_src "src/libmatrix/*.cpp" "src/libmatrix/*.h")
@@ -59,5 +58,5 @@ endif()
 
 add_executable(matrix_tests ${libmatrix_test})
 target_link_libraries(matrix_tests gtest libmx libtp)
-add_executable(tp_test ${libtp_test} test/libtp_test/threadPoolTest.cpp)
-target_link_libraries(tp_test gtest libtp)
+add_executable(tp_test ${libtp_test} test/libtp_test/threadPoolTest.cpp test/libtp_test/workQueueMock.h)
+target_link_libraries(tp_test gtest gmock libtp)
