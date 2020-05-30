@@ -14,7 +14,7 @@ bool foo(int i, char j) {
 
 TEST(ThreadPoolWorkQueue, addWork) {
     workQueue<bool> test = workQueue<bool>();
-    bool *bar;
+    bool *bar{false};
     test.addWork([] { return foo(1, 'a'); }, bar);
     EXPECT_EQ(test.workLeftToDo(), 1);
     EXPECT_EQ(test.isWorkDone(), false);
@@ -28,7 +28,8 @@ TEST(ThreadPoolWorkQueue, testWork) {
     workQueue<int> test = workQueue<int>();
     for (int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++) {
-            int* foo;
+            int g = 2;
+            int* foo = &g;
             test.addWork([i, j] () { return bar(i, j); }, foo);
         }
     }

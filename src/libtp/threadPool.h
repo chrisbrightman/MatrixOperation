@@ -5,6 +5,8 @@
 #ifndef MATRIXOPERATIONS_THREADPOOL_H
 #define MATRIXOPERATIONS_THREADPOOL_H
 
+
+#include"../windowsMacro.h"
 #include <thread>
 #include <queue>
 #include <stack>
@@ -19,14 +21,13 @@ namespace tp {
     template <class T>
     class threadPool {
         std::stack<std::thread*> threads;
-        workQueue<T> workQ;
+        workQueue<T> *workQ;
         bool isDone;
 
     public:
 
-
         threadPool(unsigned int maxThreads = std::thread::hardware_concurrency()) {
-            this->workQ = workQueue<T>();
+            this->workQ = new workQueue<T>();
             isDone = false;
             threads = std::stack<std::thread*>();
             for (int i = 0; i < maxThreads; i++) {
@@ -44,10 +45,11 @@ namespace tp {
                 threads.pop();
                 delete thread;
             }
+            delete workQ;
         }
 
         void addWork(std::function<T()> work, T *result) {
-            workQ.addWork( work , result);
+            workQ->addWork( work , result);
         }
 
         void waitUntilDone() {
@@ -69,15 +71,21 @@ namespace tp {
 
         void operate() {
             try {
-                while (!isDone || !workQ.isWorkDone()) {
-                    if (workQ.isWorkDone()) {
+                /*
+                if (workQ == nullptr) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+                }
+                */
+                while (!isDone || !workQ->isWorkDone()) {
+                    if (workQ->isWorkDone()) {
                         std::this_thread::sleep_for(std::chrono::seconds(1));
                     }
                     lock.lock();
-                    if (workQ.isWorkDone()) {
+                    if (workQ->isWorkDone()) {
                         continue;
                     }
-                    task_s<T> *toDo = workQ.dequeueWork();
+                    task_s<T> *toDo = workQ->dequeueWork();
                     lock.unlock();
                     if (toDo == nullptr) {
                         if (isDone) {

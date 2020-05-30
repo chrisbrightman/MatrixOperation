@@ -12,11 +12,11 @@ file(GLOB libtp_src "src/libtp/*.cpp" "src/libtp/libtp/*.h")
 file(GLOB libmatrix_test "test/libmatrix_test/*.cpp")
 file(GLOB libtp_test "test/libtp_test/*.cpp")
 
-add_executable(MatrixOperations "src/main.cpp")
+add_executable(MatrixOperations "src/main.cpp" "src/windowsMacro.h")
 
-add_library(libmx SHARED ${libmatrix_src})
+add_library(libmx STATIC ${libmatrix_src} "src/windowsMacro.h")
 
-add_library(libtp SHARED ${libtp_src})
+add_library(libtp STATIC ${libtp_src} "src/windowsMacro.h")
 
 target_link_libraries(MatrixOperations libmx libtp)
 
@@ -56,7 +56,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-add_executable(matrix_tests ${libmatrix_test})
+add_executable(matrix_tests ${libmatrix_test} "src/windowsMacro.h")
 target_link_libraries(matrix_tests gtest libmx libtp)
-add_executable(tp_test ${libtp_test} test/libtp_test/threadPoolTest.cpp test/libtp_test/workQueueMock.h)
+add_executable(tp_test ${libtp_test} test/libtp_test/threadPoolTest.cpp test/libtp_test/workQueueMock.h "src/windowsMacro.h")
 target_link_libraries(tp_test gtest gmock libtp)

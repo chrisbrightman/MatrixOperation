@@ -17,7 +17,7 @@ class cpuMatrix {
     int **content;
     int rowSize;
     int colSize;
-    uint maxThreads;
+    unsigned int maxThreads;
 public:
     cpuMatrix(int rowSize, int colSize);
     virtual ~cpuMatrix();
