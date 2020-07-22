@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "libmatrix/matrix.h"
+#include "matrix.h"
 
 #define MAX_BUFFER_LENGTH 1024
 

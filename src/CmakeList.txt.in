@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(threadpool-download NONE)
+
+include(ExternalProject)
+ExternalProject_Add(threadpool
+        GIT_REPOSITORY    https://github.com/chrisbrightman/ThreadPool.git
+        GIT_TAG           master
+        SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/threadpool-src"
+        BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/threadpool-build"
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND     ""
+        INSTALL_COMMAND   ""
+        TEST_COMMAND      ""
+        )

@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../../src/libmatrix/cpuMatrix.h"
+#include "cpuMatrix.h"
 
 
 #define MATRIX_DIM 100
