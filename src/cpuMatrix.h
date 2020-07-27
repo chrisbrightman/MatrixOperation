@@ -7,6 +7,7 @@
 #define MATRIX_CPU_MATRIX
 
 #include <memory>
+#include "tpmain.h"
 
 class cpuMatrix {
     /// <summary>
@@ -18,6 +19,8 @@ class cpuMatrix {
     int rowSize;
     int colSize;
     unsigned int maxThreads;
+    tp::threadPool<int> pool;
+
 public:
     cpuMatrix(int rowSize, int colSize);
     virtual ~cpuMatrix();

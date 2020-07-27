@@ -20,6 +20,9 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/threadpool-src
     ${CMAKE_CURRENT_BINARY_DIR}/threadpool-build
     EXCLUDE_FROM_ALL)
 
+#`add_library(tp INTERFACE IMPORTED)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/threadpool-src/threadPool)
+
 add_library(libmx STATIC cpuMatrix.cpp cpuMatrix.h matrix.cpp matrix.h )
 
 add_executable(MatrixOperations main.cpp windowsMacro.h )

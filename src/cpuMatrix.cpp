@@ -1,6 +1,7 @@
 
 #include "cpuMatrix.h"
 #include <thread>
+#include "tpmain.h"
 
 //////////////////
 // constructors //
