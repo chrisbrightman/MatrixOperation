@@ -36,5 +36,8 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 
-add_executable(matrix_tests TestMain.cpp cpuMatrixTest.cpp MatrixTest.cpp)
-target_link_libraries(matrix_tests gtest libmx tp)
+add_executable(matrix_tests TestMain.cpp  MatrixTest.cpp)
+
+target_include_directories(matrix_tests PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/cpu ${CMAKE_SOURCE_DIR}/src/cuda)
+
+target_link_libraries(matrix_tests gtest libcpu libmx)

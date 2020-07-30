@@ -12,7 +12,12 @@
       "ctestCommandArgs": "",
       "variables": [
         {
-          "name": "INSTALL_TP",
+          "name": "INSTALL_GTEST",
+          "value": "true",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_WITH_CUDA",
           "value": "True",
           "type": "BOOL"
         }
@@ -30,8 +35,8 @@
       "inheritEnvironments": [ "msvc_x86" ],
       "variables": [
         {
-          "name": "INSTALL_TP",
-          "value": "True",
+          "name": "INSTALL_GTEST",
+          "value": "true",
           "type": "BOOL"
         }
       ]

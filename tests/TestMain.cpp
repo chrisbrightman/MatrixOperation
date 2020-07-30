@@ -9,11 +9,6 @@
 
 
 int main(){
-#ifdef _WIN32
-
-#endif // _WIN32
-
-
     testing::InitGoogleTest();
     RUN_ALL_TESTS();
     return EXIT_SUCCESS;

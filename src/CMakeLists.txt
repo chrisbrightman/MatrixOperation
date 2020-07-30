@@ -1,30 +1,33 @@
 
-#################
-## thread pool ##
-#################
-configure_file(CMakeList.txt.in threadpool/CMakeLists.txt)
-execute_process(COMMAND ${CMAKE_COMMAND} -G ${CMAKE_GENERATOR} .
-    RESULT_VARIABLE tpresult
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/threadpool )
-if (tpresult) 
-    message(FATAL_ERROR "There was an issue generating threadPool: ${tpresult}")
+project(matrixops LANGUAGES CXX C)
+
+add_executable(MatrixOperations "main.cpp")
+
+add_library(libmx "matrix.h" "matrix.cpp")
+
+list(APPEND MATRIX_LIBS libmx)
+
+option(BUILD_WITH_CUDA "use the cuda impelmentation" NO)
+
+target_include_directories(MatrixOperations PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(BUILD_WITH_CUDA)
+	include(checkLanguage)
+	check_language(CUDA)
+	enable_language(CUDA)	
+	if(NOT DEFINED CMAKE_CUDA_STANDARD)
+		set(CMAKE_CUDA_STANDARD 11)
+		set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+	endif()
+	add_subdirectory(cuda)
+	target_include_directories(MatrixOperations PRIVATE cuda)
+	list(APPEND MATRIX_LIBS libcuda)
 endif()
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
-    RESULT_VARIABLE tpresult
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/threadpool )
-if(tpresult)
-    message(FATAL_ERROR "Building threadPool failed: ${tpresult}")
-endif()
 
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/threadpool-src
-    ${CMAKE_CURRENT_BINARY_DIR}/threadpool-build
-    EXCLUDE_FROM_ALL)
+add_subdirectory(cpu)
 
-#`add_library(tp INTERFACE IMPORTED)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/threadpool-src/threadPool)
+list(APPEND MATRIX_LIBS libcpu)
 
-add_library(libmx STATIC cpuMatrix.cpp cpuMatrix.h matrix.cpp matrix.h )
+target_include_directories(MatrixOperations PRIVATE cpu)
 
-add_executable(MatrixOperations main.cpp windowsMacro.h )
-
-target_link_libraries(MatrixOperations libmx tp)
+target_link_libraries(MatrixOperations ${MATRIX_LIBS})

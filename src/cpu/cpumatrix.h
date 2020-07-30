@@ -1,56 +1,54 @@
-///
-/// author: chris
-///
+//
+// Created by chris on 5/12/2020.
+// this is a matrix that only uses single threaded operations for its 
+// opertaions 
+//
 
+#ifndef MATRIXOPERATIONS_MATRIX_H
+#define MATRIXOPERATIONS_MATRIX_H
 
-#ifndef MATRIX_CPU_MATRIX
-#define MATRIX_CPU_MATRIX
+#include "matrix.h"
 
-#include <memory>
-#include "tpmain.h"
-
-class cpuMatrix {
+class cpumatrix : matrix {
     /// <summary>
     /// content: content of matrix; orientation [row][col]
     /// rowsize: the size of the row
     /// colSize: the size of the columns
     /// </summary>
-    int **content;
-    int rowSize;
-    int colSize;
-    unsigned int maxThreads;
-    tp::threadPool<int> pool;
-
 public:
-    cpuMatrix(int rowSize, int colSize);
-    virtual ~cpuMatrix();
+    /// <summary>
+    /// main constructor creates a blank matrix
+    /// </summary>
+    /// <param name="rowSize"> the row dimension</param>
+    /// <param name="colSize"> the column dimension</param>
+    cpumatrix(int rowSize, int colSize) : matrix(rowSize, colSize) {};
 
     /// <summary>
     /// impelmentation of a matrix add
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to sum matrix</returns>
-    std::shared_ptr<cpuMatrix> operator + (const cpuMatrix&);
+    cpumatrix operator + (const cpumatrix&);
 
     /// <summary>
     /// the subtraction opertor 
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to resultant matrix</returns>
-    std::shared_ptr<cpuMatrix> operator - (const cpuMatrix&);
+    cpumatrix * operator - (const cpumatrix&);
 
     /// <summary>
     /// multiplying two matriceis
     /// </summary>
     /// <param name=""> the other matrix</param>
     /// <returns> pointer to result</returns>
-    std::shared_ptr<cpuMatrix> operator * (const cpuMatrix&);
+    cpumatrix * operator * (const cpumatrix&);
 
     /// <summary>
     /// creates the transpose of the matrix this
     /// </summary>
     /// <returns> the transposed matrix </returns>
-    std::shared_ptr<cpuMatrix> invert();
+    cpumatrix *invert();
 
     /// <summary>
     /// this will set a single cell's value
@@ -67,18 +65,11 @@ public:
     /// <param name="cellIndex"> the column index</param>
     /// <returns> the value in that row index</returns>
     int getItem(int rowIndex, int cellIndex) const;
-
 private:
-    static void add(int rowIndex, int colIndex, int **one, int **two, int  **result);
-    static void subtract(int rowIndex, int colIndex, int **one, int **two, int **result);
-    static void toInvert(int rowIndex, int colIndex, int **original, int **result);
-    std::shared_ptr<cpuMatrix> runThreads(void (*operation)(int,int,int**, int**, int**), const cpuMatrix& other);
-
-    void scaleVector(int* buffer, int scaler, const int *vector, int norm);
-    int **makeDoubleVector(int normOne, int normTwo) const;
-
-    void linearCombination(int *buffer, const int *vectorOne, const int *vectorTwo, int normOne, int normTwo);
-
+    void scaleVector(double* buffer, int scaler, const double *vector, int norm);
+    void linearCombination(double *buffer, const double *vectorOne, const double *vectorTwo, int normOne, int normTwo);
 };
 
-#endif // MATRIX_CPU_MATRIX
+
+
+#endif //MATRIXOPERATIONS_MATRIX_H
